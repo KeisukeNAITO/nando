@@ -2,11 +2,19 @@
 const request = require('supertest');
 const index = require('../../router/index');
 
-describe('Test for root.js over index.js', () => {
+describe('Test for post.js over index.js', () => {
     describe('Unit Test', () => {
-        test('GET method for /', () => {
+        test('POST method for /post', () => {
             return request(index)
-                .get('/')
+                .post('/post')
+                .then((response) => {
+                    expect(response.statusCode).toBe(200);
+                });
+        });
+
+        test('GET method for /post/{postId}', () => {
+            return request(index)
+                .get('/post/post123')
                 .then((response) => {
                     expect(response.statusCode).toBe(200);
                 });
@@ -14,52 +22,45 @@ describe('Test for root.js over index.js', () => {
     });
 
     describe('Unit Test for Error', () => {
-        test('POST method for /', () => {
+        test('GET method for /post', () => {
             return request(index)
-                .post('/')
+                .get('/post')
                 .then((response) => {
                     expect(response.statusCode).toBe(404);
                 });
         });
-        test('PUT method for /', () => {
+        test('PUT method for /post', () => {
             return request(index)
-                .put('/')
+                .put('/post')
                 .then((response) => {
                     expect(response.statusCode).toBe(404);
                 });
         });
-        test('DELETE method for /', () => {
+        test('DELETE method for /post', () => {
             return request(index)
-                .delete('/')
+                .delete('/post')
                 .then((response) => {
                     expect(response.statusCode).toBe(404);
                 });
         });
 
-        test('GET method for /not_exist_path', () => {
+        test('POST method for /post/{postId}', () => {
             return request(index)
-                .get('/notfound')
+                .post('/post/post123')
                 .then((response) => {
                     expect(response.statusCode).toBe(404);
                 });
         });
-        test('POST method for /not_exist_path', () => {
+        test('PUT method for /post/{postId}', () => {
             return request(index)
-                .post('/notfound')
+                .put('/post/post123')
                 .then((response) => {
                     expect(response.statusCode).toBe(404);
                 });
         });
-        test('PUT method for /not_exist_path', () => {
+        test('DELETE method for /post/{postId}', () => {
             return request(index)
-                .put('/notfound')
-                .then((response) => {
-                    expect(response.statusCode).toBe(404);
-                });
-        });
-        test('DELETE method for /not_exist_path', () => {
-            return request(index)
-                .delete('/notfound')
+                .delete('/post/post123')
                 .then((response) => {
                     expect(response.statusCode).toBe(404);
                 });
